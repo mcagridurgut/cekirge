@@ -3,10 +3,11 @@ import { cn } from "../../utils/utils";
 import { useLockBody } from "../../hooks/use-lock-body";
 import { Icons } from "../../utils/Icons";
 import { Link } from "react-router-dom";
+import { useClerk } from "@clerk/clerk-react";
 
-export function MobileNav({ children }) {
+export function MobileNav({ children, showMobileMenu, setShowMobileMenu }) {
   useLockBody();
-
+  const { user } = useClerk();
   return (
     <div
       className={cn(
@@ -20,7 +21,28 @@ export function MobileNav({ children }) {
         </Link>
         <nav className="grid grid-flow-row auto-rows-max text-sm">
           <Link
-            to={"/about"}
+            to={"/dashboard"}
+            onClick={() => setShowMobileMenu(false)}
+            className={cn(
+              "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline"
+            )}
+          >
+            Dashboard
+          </Link>
+          {user && (
+            <Link
+              to={"/meetings"}
+              onClick={() => setShowMobileMenu(false)}
+              className={cn(
+                "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline"
+              )}
+            >
+              Meetings
+            </Link>
+          )}
+          <Link
+            to={"/#about"}
+            onClick={() => setShowMobileMenu(false)}
             className={cn(
               "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline"
             )}
@@ -29,6 +51,7 @@ export function MobileNav({ children }) {
           </Link>
           <Link
             to={"/team"}
+            onClick={() => setShowMobileMenu(false)}
             className={cn(
               "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline"
             )}
@@ -37,11 +60,21 @@ export function MobileNav({ children }) {
           </Link>
           <Link
             to={"/contact"}
+            onClick={() => setShowMobileMenu(false)}
             className={cn(
               "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline"
             )}
           >
             Contact
+          </Link>
+          <Link
+            to={"/stack"}
+            onClick={() => setShowMobileMenu(false)}
+            className={cn(
+              "flex w-full items-center rounded-md p-2 text-sm font-medium hover:underline"
+            )}
+          >
+            Stack
           </Link>
         </nav>
         {children}

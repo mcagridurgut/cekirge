@@ -3,7 +3,6 @@ import * as React from "react";
 import { cn } from "../../utils/utils";
 import { Icons } from "../../utils/Icons";
 import { MobileNav } from "./MobileNav";
-import useMediaQuery from "../../hooks/use-media-query";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,16 +13,24 @@ import {
 } from "../ui/navigation-menu";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useClerk } from "@clerk/clerk-react";
 
+/* eslint-disable react/prop-types */
 export default function Navbar({ items, children }) {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+
+  // if there is a signed user set this const to true
+  const { user } = useClerk();
 
   return (
     <div className="flex gap-6 md:gap-10">
       <div className="hidden md:flex">
         <Link to="/" className="items-center space-x-2 flex mr-5">
-          <Icons.logo />
+          <Avatar>
+            <AvatarImage src={"/logo.svg"} alt={"cekirge"} />
+            <AvatarFallback>C</AvatarFallback>
+          </Avatar>
           <span className="hidden font-bold sm:inline-block">Cekirge</span>
         </Link>
 
@@ -50,7 +57,7 @@ export default function Navbar({ items, children }) {
                       </Link>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem to="/about" title="About">
+                  <ListItem to="/#about" title="About">
                     Learn about Cekirge and its mission, vision and values
                   </ListItem>
                   <ListItem to="/team" title="Team">
@@ -92,6 +99,13 @@ export default function Navbar({ items, children }) {
                 <Button variant={"ghost"}>Dashboard</Button>
               </Link>
             </NavigationMenuItem>
+            {user && (
+              <NavigationMenuItem>
+                <Link to={"/meetings"}>
+                  <Button variant={"ghost"}>Meetings</Button>
+                </Link>
+              </NavigationMenuItem>
+            )}
           </NavigationMenuList>
         </NavigationMenu>
       </div>
@@ -102,7 +116,14 @@ export default function Navbar({ items, children }) {
         {showMobileMenu ? <Icons.close /> : <Icons.menu />}
         <span className="font-bold">Cekirge</span>
       </button>
-      {showMobileMenu && items && <MobileNav>{children}</MobileNav>}
+      {showMobileMenu && items && (
+        <MobileNav
+          showMobileMenu={showMobileMenu}
+          setShowMobileMenu={setShowMobileMenu}
+        >
+          {children}
+        </MobileNav>
+      )}
     </div>
   );
 }

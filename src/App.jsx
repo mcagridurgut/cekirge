@@ -6,6 +6,7 @@ import {
   SignedIn,
   SignedOut,
   SignUp,
+  UserProfile,
 } from "@clerk/clerk-react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Home } from "./pages/Home";
@@ -13,6 +14,11 @@ import { Login } from "./components/auth/Login";
 import { Dashboard } from "./pages/Dashboard";
 import { dark, light } from "@clerk/themes";
 import { useTheme } from "./utils/ThemeContext";
+import { Team } from "./pages/Team";
+import { Contact } from "./pages/Contact";
+import { Stack } from "./pages/Stack";
+import { Meetings } from "./pages/Meetings";
+import Tutor from "./pages/Tutor";
 
 const clerk_pub_key = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -50,6 +56,9 @@ function ClerkProviderWithRoutes() {
             path="/sign-up/*"
             element={<SignUp routing="path" path="/sign-up" />}
           />
+          <Route path="/team" element={<Team />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/stack" element={<Stack />} />
           <Route
             path="/dashboard/*"
             element={
@@ -59,6 +68,45 @@ function ClerkProviderWithRoutes() {
                 </SignedIn>
                 <SignedOut>
                   <RedirectToSignIn to="/sign-in" />
+                </SignedOut>
+              </>
+            }
+          />
+          <Route
+            path="/profile/*"
+            element={
+              <>
+                <SignedIn>
+                  <UserProfile />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          />
+          <Route
+            path="/tutors/:id"
+            element={
+              <>
+                <SignedIn>
+                  <Tutor />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          />
+          <Route
+            path="/meetings"
+            element={
+              <>
+                <SignedIn>
+                  <Meetings />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
                 </SignedOut>
               </>
             }

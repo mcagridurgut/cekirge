@@ -80,3 +80,22 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+.horizontal-scroll-container {
+  overscroll-behavior-x: contain;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar {
+  height: 8px;
+  background-color: (var(--background));
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 4px;
+}
+
+.horizontal-scroll-container::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}

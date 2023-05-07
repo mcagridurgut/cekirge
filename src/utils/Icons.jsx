@@ -24,6 +24,7 @@ import {
   X,
   Menu,
   Bug,
+  AlarmClock,
 } from "lucide-react";
 
 import myLogo from "../../public/logo.svg";
@@ -50,6 +51,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   menu: Menu,
+  alarmClock: AlarmClock,
   laptop: Laptop,
   gitHub: ({ ...props }) => (
     <svg
