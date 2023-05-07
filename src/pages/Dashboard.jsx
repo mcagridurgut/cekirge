@@ -1,4 +1,4 @@
-import { TutorCard } from "../components/tutorCard";
+import { TutorCard } from "../components/TutorCard";
 import { Button } from "../components/ui/button";
 
 export function Dashboard() {
